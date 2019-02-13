@@ -30,20 +30,20 @@ public class FleetmanRegistryApplication {
 
 // The following is needed if running on Spring Cloud prior to the "Dalston" release train.
 // See the VirtualPairprogrammer.com Video for details
-		final EurekaInstanceConfigBean instance = new EurekaInstanceConfigBean(utils);
-//		{
-//			@Scheduled(initialDelay = 30000L, fixedRate = 30000L)
-//			public void refreshInfo() {
-//				AmazonInfo newInfo = AmazonInfo.Builder.newBuilder().autoBuild("eureka");
-//				if (!this.getDataCenterInfo().equals(newInfo)) {
-//					((AmazonInfo) this.getDataCenterInfo()).setMetadata(newInfo.getMetadata());
-//					this.setHostname(newInfo.get(AmazonInfo.MetaDataKey.publicHostname));
-//					this.setIpAddress(newInfo.get(AmazonInfo.MetaDataKey.publicIpv4));
-//					this.setDataCenterInfo(newInfo);
-//					this.setNonSecurePort(port);
-//				}
-//			}         
-//		};
+		final EurekaInstanceConfigBean instance = new EurekaInstanceConfigBean(utils)
+		{
+			@Scheduled(initialDelay = 30000L, fixedRate = 30000L)
+			public void refreshInfo() {
+				AmazonInfo newInfo = AmazonInfo.Builder.newBuilder().autoBuild("eureka");
+				if (!this.getDataCenterInfo().equals(newInfo)) {
+					((AmazonInfo) this.getDataCenterInfo()).setMetadata(newInfo.getMetadata());
+					this.setHostname(newInfo.get(AmazonInfo.MetaDataKey.publicHostname));
+					this.setIpAddress(newInfo.get(AmazonInfo.MetaDataKey.publicIpv4));
+					this.setDataCenterInfo(newInfo);
+					this.setNonSecurePort(port);
+				}
+			}         
+		};
 		AmazonInfo info = AmazonInfo.Builder.newBuilder().autoBuild("eureka");
 		instance.setHostname(info.get(AmazonInfo.MetaDataKey.publicHostname));
 		instance.setIpAddress(info.get(AmazonInfo.MetaDataKey.publicIpv4));
